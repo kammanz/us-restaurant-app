@@ -21,6 +21,7 @@ const List = ({ restaurants }) => {
               cuisine ? cuisine : 'not listed'
             )}
           </div>
+          <br />
         </div>
       );
     });
