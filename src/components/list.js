@@ -6,8 +6,6 @@ const List = ({ restaurants }) => {
     return null;
   }
 
-  console.log(restaurants);
-
   const restaurantList =
     restaurants &&
     restaurants.map((restaurant, i) => {

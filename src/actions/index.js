@@ -1,4 +1,4 @@
-import restaurants from '../api/restaurants';
+// import restaurants from '../api/restaurants';
 import { FETCH_RESTAURANTS } from './types';
 import axios from 'axios';
 
