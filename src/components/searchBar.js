@@ -10,6 +10,7 @@ const SearchBar = (props) => {
   const [isLoading, setLoading] = useState(false);
 
   console.log('isError ', isError);
+  console.log('zipcode', zipCode);
 
   const validate = () => {
     if (zipCode.length !== 5) {
@@ -25,7 +26,7 @@ const SearchBar = (props) => {
     e.preventDefault();
     const isValid = validate();
     if (isValid) {
-      props.fetchRestaurants(zipCode);
+      props.fetchRestaurants(zipCode, true);
       setZipCode('');
     }
   };

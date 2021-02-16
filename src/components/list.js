@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-const List = ({ restaurants }) => {
+const List = ({ restaurants, isLoading }) => {
   if (!restaurants) {
     return null;
   }
@@ -24,7 +24,7 @@ const List = ({ restaurants }) => {
       );
     });
 
-  return <div>{restaurantList}</div>;
+  return <div>{!isLoading ? restaurantList : null}</div>;
 };
 
 const mapStateToProps = ({ restaurants }) => {
