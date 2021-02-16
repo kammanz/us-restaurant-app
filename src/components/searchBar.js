@@ -2,7 +2,10 @@ import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { fetchRestaurants } from '../actions/index';
 
+import Filter from './filter';
+
 import './searchBar.css';
+import restaurants from '../api/restaurants';
 
 const SearchBar = (props) => {
   const [zipCode, setZipCode] = useState('');
@@ -45,6 +48,7 @@ const SearchBar = (props) => {
         <button type="type">Submit</button>
       </form>
       {isError === true && <div>Please enter valid zip code</div>}
+      <Filter restaurants={restaurants} />
     </div>
   );
 };

@@ -8,6 +8,7 @@ export const fetchRestaurants = (zipCode, isLoading) => async (dispatch) => {
     `https://api.documenu.com/v2/restaurants/search/fields?zip_code=${zipCode}&exact=true&key=f465194f22a155ddadbf18e045e1a5ad`
   );
   const parsedResponse = response.data.data;
+  console.log('parsedResponse: ', parsedResponse);
   dispatch({ type: FETCH_RESTAURANTS, payload: parsedResponse });
   dispatch({ type: IS_LOADING, payload: false });
 };

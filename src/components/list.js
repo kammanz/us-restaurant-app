@@ -1,9 +1,21 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 
 const List = ({ restaurants, isLoading }) => {
-  if (!restaurants) {
-    return null;
+  // console.log('is loading: ', isLoading);
+
+  // const [restaurantList, setRestaurantList] = useState('null');
+  // const [loading, setLoading] = useState(false);
+
+  useEffect(() => {});
+
+  if (restaurants && restaurants.length === 0) {
+    return <div>no restaurants in that zip code</div>;
+  }
+
+  if (isLoading === true) {
+    // console.log('here!');
+    return <div></div>;
   }
 
   const restaurantList =
@@ -27,8 +39,8 @@ const List = ({ restaurants, isLoading }) => {
   return <div>{!isLoading ? restaurantList : null}</div>;
 };
 
-const mapStateToProps = ({ restaurants }) => {
-  return { restaurants };
+const mapStateToProps = ({ restaurants, isLoading }) => {
+  return { restaurants, isLoading };
 };
 
 export default connect(mapStateToProps)(List);

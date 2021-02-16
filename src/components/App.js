@@ -21,7 +21,7 @@ const App = ({ isLoading }) => {
       <div>
         <SearchBar />
         <br />
-        <List isLoading={loading} />
+        <List /*isLoading={loading}*/ />
       </div>
     </div>
   );
