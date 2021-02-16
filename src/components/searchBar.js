@@ -7,6 +7,8 @@ import './searchBar.css';
 const SearchBar = (props) => {
   const [zipCode, setZipCode] = useState('');
   const [isError, setError] = useState(false);
+  const [isLoading, setLoading] = useState(false);
+
   console.log('isError ', isError);
 
   const validate = () => {
@@ -38,12 +40,12 @@ const SearchBar = (props) => {
         <label>Find a Restaurant in your Area</label>
         <br />
         <input
-          // style={{ WebkitAppearance: 'none', margin: 0 }}
           type="number"
           placeholder="Enter zip code"
           value={zipCode}
           onChange={(e) => handleChange(e.target.value)}
         />
+        <button type="type">Submit</button>
       </form>
       {isError === true && <div>Please enter valid zip code</div>}
     </div>

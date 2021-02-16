@@ -1,1 +1,2 @@
 export const FETCH_RESTAURANTS = 'FETCH_RESTAURANTS';
+export const IS_LOADING = 'IS_LOADING';
