@@ -1,6 +1,7 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
+import { BounceLoader } from 'react-spinners';
 
 import SearchBar from './searchBar';
 
@@ -13,15 +14,14 @@ const App = ({ isLoading }) => {
     setLoading(isLoading);
   }, [isLoading]);
 
-  console.log('app.js isLoading: ', isLoading);
   return (
     <div className="App">
+      <BounceLoader loading={loading} />
       <h1>Restaurant Search</h1>
-      {loading === true && <div>loading...</div>}
       <div>
         <SearchBar />
         <br />
-        <List isLoading={isLoading} />
+        <List isLoading={loading} />
       </div>
     </div>
   );
