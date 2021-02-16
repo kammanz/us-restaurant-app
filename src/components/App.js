@@ -4,7 +4,7 @@ import List from './list';
 const App = () => {
   return (
     <div className="App">
-      <h1>Find a Restaurant</h1>
+      <h1>Restaurant Search</h1>
       <div>
         <SearchBar />
         <br />

@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { fetchRestaurants } from '../actions/index';
 
+import './searchBar.css';
+
 const SearchBar = (props) => {
   const [zipCode, setZipCode] = useState('');
   const [isError, setError] = useState(false);
@@ -33,16 +35,17 @@ const SearchBar = (props) => {
   return (
     <div>
       <form onSubmit={(e) => handleSubmit(e)}>
-        <label>Enter Your Zip Code</label>
+        <label>Find a Restaurant in your Area</label>
         <br />
         <input
+          // style={{ WebkitAppearance: 'none', margin: 0 }}
           type="number"
-          placeholder="12345"
+          placeholder="Enter zip code"
           value={zipCode}
           onChange={(e) => handleChange(e.target.value)}
         />
       </form>
-      {isError === true && <div>must be 5 numbers</div>}
+      {isError === true && <div>Please enter valid zip code</div>}
     </div>
   );
 };
