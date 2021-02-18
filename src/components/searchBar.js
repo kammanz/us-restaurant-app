@@ -1,55 +1,69 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
-import { fetchRestaurants } from '../actions/index';
-
-import Filter from './filter';
-
+import { fetchRestaurants, filterRestaurants } from '../actions/index';
 import './searchBar.css';
-import restaurants from '../api/restaurants';
 
 const SearchBar = (props) => {
   const [zipCode, setZipCode] = useState('');
   const [isError, setError] = useState(false);
+  const [name, setName] = useState('');
 
-  const validate = () => {
-    if (zipCode.length !== 5) {
-      setError(true);
-    }
-    if (zipCode.length === 5) {
-      setError(false);
-      return true;
-    }
-  };
+  useEffect(() => {
+    console.log('use effect fired');
+    console.log('name: ', name);
+    props.filterRestaurants(name);
+  }, [name]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const isValid = validate();
-    if (isValid) {
+    if (zipCode.length === 5) {
       props.fetchRestaurants(zipCode, true);
       setZipCode('');
+    } else {
+      setError(true);
     }
   };
 
   const handleChange = (value) => {
+    setError(false);
     setZipCode(value);
   };
 
+  const handleFilterChange = (e) => {
+    setName(e.target.value);
+  };
+
+  const filter = () => {
+    return (
+      <>
+        <label>Limit by Restaurant Name</label>
+        <br />
+        <input
+          type="text"
+          placeholder="Restaurant name"
+          value={name}
+          onChange={(e) => handleFilterChange(e)}
+        />
+      </>
+    );
+  };
+
   return (
-    <div>
+    <section role="search">
       <form onSubmit={(e) => handleSubmit(e)}>
-        <label>Find a Restaurant in your Area</label>
+        <label>Enter your chosen Zip Code</label>
         <br />
         <input
           type="number"
-          placeholder="Enter zip code"
+          placeholder="eg. 12345"
           value={zipCode}
           onChange={(e) => handleChange(e.target.value)}
         />
         <button type="type">Submit</button>
       </form>
       {isError === true && <div>Please enter valid zip code</div>}
-      <Filter restaurants={restaurants} />
-    </div>
+      {filter()}
+    </section>
   );
 };
 
@@ -57,4 +71,8 @@ const mapStateToProps = (state) => {
   return { restaurants: state.restaurants };
 };
 
-export default connect(mapStateToProps, { fetchRestaurants }, null)(SearchBar);
+export default connect(
+  mapStateToProps,
+  { fetchRestaurants, filterRestaurants },
+  null
+)(SearchBar);

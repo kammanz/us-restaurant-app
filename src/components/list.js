@@ -1,46 +1,65 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 
-const List = ({ restaurants, isLoading }) => {
-  // console.log('is loading: ', isLoading);
-
-  // const [restaurantList, setRestaurantList] = useState('null');
-  // const [loading, setLoading] = useState(false);
-
-  useEffect(() => {});
-
-  if (restaurants && restaurants.length === 0) {
-    return <div>no restaurants in that zip code</div>;
+const List = ({ restaurantList, filteredRestaurantList, isLoading }) => {
+  console.log('filtered restaurant list: ', filteredRestaurantList);
+  useEffect(() => {
+    console.log('filtered list has changed');
+  }, [filteredRestaurantList]);
+  if (!restaurantList) {
+    return null;
   }
 
-  if (isLoading === true) {
-    // console.log('here!');
-    return <div></div>;
+  if (filteredRestaurantList) {
+    return (
+      filteredRestaurantList &&
+      filteredRestaurantList.map((restaurant, i) => {
+        return (
+          <li key={i}>
+            <h5>{restaurant.restaurant_name}</h5>
+            <p>address: {restaurant.address.formatted}</p>
+            <p>
+              cuisine:{' '}
+              {restaurant.cuisines.map((cuisine) =>
+                cuisine ? cuisine : 'not listed'
+              )}
+            </p>
+            <br />
+          </li>
+        );
+      })
+    );
   }
 
-  const restaurantList =
-    restaurants &&
-    restaurants.map((restaurant, i) => {
+  const renderRestaurantList =
+    restaurantList &&
+    restaurantList.map((restaurant, i) => {
       return (
-        <div key={i}>
-          <div>{restaurant.restaurant_name}</div>
-          <div>address: {restaurant.address.formatted}</div>
-          <div>
+        <li key={i}>
+          <h5>{restaurant.restaurant_name}</h5>
+          <p>address: {restaurant.address.formatted}</p>
+          <p>
             cuisine:{' '}
             {restaurant.cuisines.map((cuisine) =>
               cuisine ? cuisine : 'not listed'
             )}
-          </div>
+          </p>
           <br />
-        </div>
+        </li>
       );
     });
 
-  return <div>{!isLoading ? restaurantList : null}</div>;
+  return <ul>{!isLoading ? renderRestaurantList : null}</ul>;
 };
 
-const mapStateToProps = ({ restaurants, isLoading }) => {
-  return { restaurants, isLoading };
+const mapStateToProps = ({
+  restaurants: { restaurants, isLoading, filteredRestaurants },
+}) => {
+  return {
+    restaurantList: restaurants,
+    isLoading: isLoading,
+    filteredRestaurantList: filteredRestaurants,
+  };
 };
 
-export default connect(mapStateToProps)(List);
+export default connect(mapStateToProps, null)(List);
