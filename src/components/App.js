@@ -1,22 +1,32 @@
+import React from 'react';
+import { connect } from 'react-redux';
+import { BounceLoader } from 'react-spinners';
 import SearchBar from './searchBar';
-import fetchStreams from '../actions/index';
-import restaurants from '../api/restaurants';
-import axios from 'axios';
-
 import List from './list';
+import './App.css';
 
-const App = () => {
+const App = ({ loading, dispatch }) => {
   return (
     <div className="App">
-      <h1>Find a Restaurant</h1>
-      <div>
-        <SearchBar />
-        <br />
+      <BounceLoader loading={loading} />
+      <header>
+        <h1>Let's Eat Out</h1>
+        <h3>Search for restaurants in the United States.</h3>
+        <p>
+          Search restaurants by zip code, then filter by address or cuisine.
+          We'll see what we can find!
+        </p>
+      </header>
+      <main>
+        <SearchBar dispatch={dispatch} />
         <br />
         <List />
-      </div>
+      </main>
     </div>
   );
 };
 
-export default App;
+const mapStateToProps = ({ restaurants: { isLoading } }) => {
+  return { loading: isLoading };
+};
+export default connect(mapStateToProps, {})(App);

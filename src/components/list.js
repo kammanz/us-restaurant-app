@@ -1,36 +1,68 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 
-const List = ({ restaurants }) => {
-  if (!restaurants) {
+const List = ({ restaurantList, filteredRestaurantList, isLoading }) => {
+  useEffect(() => {}, [filteredRestaurantList]);
+  console.log('fl', filteredRestaurantList);
+
+  if (!restaurantList) {
     return null;
   }
 
-  console.log(restaurants);
+  if (filteredRestaurantList) {
+    return (
+      filteredRestaurantList &&
+      filteredRestaurantList.map((restaurant, i) => {
+        return (
+          <li key={i}>
+            <h5>{restaurant.restaurant_name}</h5>
+            <p>address: {restaurant.address.formatted}</p>
+            <p>
+              cuisine:{' '}
+              {restaurant.cuisines.map((cuisine) =>
+                cuisine ? cuisine : 'not listed'
+              )}
+            </p>
+            <br />
+          </li>
+        );
+      })
+    );
+  }
 
-  const restaurantList =
-    restaurants &&
-    restaurants.map((restaurant, i) => {
+  const renderRestaurantList =
+    restaurantList &&
+    restaurantList.map((restaurant, i) => {
       return (
-        <div key={i}>
-          <div>{restaurant.restaurant_name}</div>
-          <div>address: {restaurant.address.formatted}</div>
-          <div>
+        <li key={i}>
+          <h5>{restaurant.restaurant_name}</h5>
+          <p>address: {restaurant.address.formatted}</p>
+          <p>
             cuisine:{' '}
             {restaurant.cuisines.map((cuisine) =>
               cuisine ? cuisine : 'not listed'
             )}
-          </div>
+          </p>
           <br />
-        </div>
+        </li>
       );
     });
 
-  return <div>{restaurantList}</div>;
+  return (
+    <ul>
+      {!isLoading && !filteredRestaurantList ? renderRestaurantList : null}
+    </ul>
+  );
 };
 
-const mapStateToProps = ({ restaurants }) => {
-  return { restaurants };
+const mapStateToProps = ({
+  restaurants: { restaurants, isLoading, filteredRestaurants },
+}) => {
+  return {
+    restaurantList: restaurants,
+    isLoading: isLoading,
+    filteredRestaurantList: filteredRestaurants,
+  };
 };
 
-export default connect(mapStateToProps)(List);
+export default connect(mapStateToProps, null)(List);
