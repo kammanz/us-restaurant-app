@@ -4,14 +4,13 @@ import { fetchRestaurants, filterRestaurants } from '../actions/index';
 import './searchBar.css';
 
 const SearchBar = (props) => {
+  const { filterRestaurants, restaurants } = props;
   const [zipCode, setZipCode] = useState('');
   const [isError, setError] = useState(false);
   const [name, setName] = useState('');
 
   useEffect(() => {
-    console.log('use effect fired');
-    console.log('name: ', name);
-    props.filterRestaurants(name);
+    filterRestaurants(name);
   }, [name]);
 
   const handleSubmit = (e) => {
@@ -30,22 +29,27 @@ const SearchBar = (props) => {
   };
 
   const handleFilterChange = (e) => {
-    setName(e.target.value);
+    const value = e.target.value.toLowerCase();
+    setName(value);
   };
 
   const filter = () => {
-    return (
-      <>
-        <label>Limit by Restaurant Name</label>
-        <br />
-        <input
-          type="text"
-          placeholder="Restaurant name"
-          value={name}
-          onChange={(e) => handleFilterChange(e)}
-        />
-      </>
-    );
+    if (restaurants.restaurants.length > 0) {
+      return (
+        <>
+          <label>Limit by Restaurant Name</label>
+          <br />
+          <input
+            type="text"
+            placeholder="Restaurant name"
+            value={name}
+            onChange={(e) => handleFilterChange(e)}
+          />
+        </>
+      );
+    }
+
+    return null;
   };
 
   return (

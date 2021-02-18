@@ -16,10 +16,5 @@ export const fetchRestaurants = (zipCode) => async (dispatch) => {
 };
 
 export const filterRestaurants = (name) => (dispatch) => {
-  console.log('action filter rest fired');
   dispatch({ type: FILTER_RESTAURANTS, payload: name });
-  console.log('here 3');
 };
-
-// TODO: action to filter restaurants, get a string as a param, call a dispatch FILTER_RESTAURANTS,
-// in reducer, return

@@ -2,10 +2,7 @@ import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 
 const List = ({ restaurantList, filteredRestaurantList, isLoading }) => {
-  console.log('filtered restaurant list: ', filteredRestaurantList);
-  useEffect(() => {
-    console.log('filtered list has changed');
-  }, [filteredRestaurantList]);
+  useEffect(() => {}, [filteredRestaurantList]);
   if (!restaurantList) {
     return null;
   }
