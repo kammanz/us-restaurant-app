@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 
 const List = ({ restaurantList, filteredRestaurantList, isLoading }) => {
   useEffect(() => {}, [filteredRestaurantList]);
+  console.log('fl', filteredRestaurantList);
+
   if (!restaurantList) {
     return null;
   }
@@ -46,7 +48,11 @@ const List = ({ restaurantList, filteredRestaurantList, isLoading }) => {
       );
     });
 
-  return <ul>{!isLoading ? renderRestaurantList : null}</ul>;
+  return (
+    <ul>
+      {!isLoading && !filteredRestaurantList ? renderRestaurantList : null}
+    </ul>
+  );
 };
 
 const mapStateToProps = ({

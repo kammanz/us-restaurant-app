@@ -11,7 +11,7 @@ const SearchBar = (props) => {
 
   useEffect(() => {
     filterRestaurants(name);
-  }, [name]);
+  }, [name, filterRestaurants]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
